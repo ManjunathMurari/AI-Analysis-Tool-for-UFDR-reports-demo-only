@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ForenX - Secure Login</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        body { background-color: #050505; color: white; overflow: hidden; }
+        .grid-bg {
+            background-color: #0b1120;
+            background-image: linear-gradient(rgba(59, 130, 246, 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(59, 130, 246, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .scan-line {
+            position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+            background: cyan; box-shadow: 0 0 10px cyan;
+            animation: scan 2s infinite linear;
+            z-index: 20;
+        }
+        @keyframes scan {
+            0% { top: 0%; opacity: 0; }
+            50% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+        .hud-corner { position: absolute; width: 20px; height: 20px; border: 2px solid cyan; z-index: 20; }
+        .top-left { top: 0; left: 0; border-right: 0; border-bottom: 0; }
+        .top-right { top: 0; right: 0; border-left: 0; border-bottom: 0; }
+        .bottom-left { bottom: 0; left: 0; border-right: 0; border-top: 0; }
+        .bottom-right { bottom: 0; right: 0; border-left: 0; border-top: 0; }
+    </style>
+</head>
+
+<body class="flex flex-col items-center justify-center h-screen grid-bg">
+
+    <div class="text-center mb-8 z-10">
+        <h1 class="text-4xl font-bold tracking-[0.5em] text-cyan-400 drop-shadow-lg">RESTRICTED ACCESS</h1>
+        <p class="text-xs text-slate-400 uppercase mt-2 tracking-widest animate-pulse">ESTABLISHING SECURE CONNECTION...</p>
+    </div>
+
+    <div class="relative w-[640px] h-[480px] bg-black rounded-lg overflow-hidden border border-cyan-500/50 shadow-[0_0_50px_rgba(6,182,212,0.15)] z-10">
+        
+        <div class="absolute inset-0 bg-slate-900/80 flex items-center justify-center">
+            <p class="text-cyan-900 text-6xl font-bold opacity-20">NO SIGNAL</p>
+        </div>
+
+        <div class="absolute inset-0 p-4 pointer-events-none">
+            <div class="relative w-full h-full border border-cyan-900/30">
+                <div class="hud-corner top-left"></div>
+                <div class="hud-corner top-right"></div>
+                <div class="hud-corner bottom-left"></div>
+                <div class="hud-corner bottom-right"></div>
+                
+                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 border border-cyan-500/30 rounded-full flex items-center justify-center">
+                    <div class="w-1.5 h-1.5 bg-cyan-500 rounded-full animate-pulse"></div>
+                </div>
+
+                <div class="scan-line"></div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-4 left-0 w-full text-center z-30">
+            <p id="action-text" class="text-xs font-mono text-cyan-500 bg-black/50 inline-block px-2">
+                BIOMETRIC BYPASS AVAILABLE (DEMO MODE)
+            </p>
+        </div>
+    </div>
+
+    <button onclick="bypassLogin()" 
+        class="mt-8 px-8 py-3 bg-cyan-950/50 border border-cyan-500/50 text-cyan-400 rounded hover:bg-cyan-500 hover:text-black transition uppercase text-xs tracking-widest cursor-pointer z-10">
+        ACCESS DASHBOARD
+    </button>
+
+    <script>
+        function bypassLogin() {
+            const label = document.getElementById('action-text');
+            label.innerText = "ACCESS GRANTED. REDIRECTING...";
+            label.classList.add('text-green-400', 'font-bold');
+            
+            setTimeout(() => {
+                // Redirect to the Upload Page (which app.py maps to index.html)
+                window.location.href = "/upload_page"; 
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

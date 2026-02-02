@@ -1,0 +1,5 @@
+Flask
+flask-cors
+requests
+gunicorn
+# Do NOT add random, datetime, os, or json here. They are built-in.
